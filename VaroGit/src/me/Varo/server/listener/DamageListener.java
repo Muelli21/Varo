@@ -28,7 +28,6 @@ public class DamageListener implements Listener {
     public void onDamage(EntityDamageByEntityEvent e) {
 
 	if (!(e.getDamager() instanceof Player)) { return; }
-
 	if (!(e.getEntity() instanceof Player)) { return; }
 
 	Player p = (Player) e.getDamager();

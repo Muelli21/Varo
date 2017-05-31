@@ -37,7 +37,7 @@ public class JoinListener implements Listener {
 	    registerTeam(p);
 
 	    p.sendMessage(ChatColor.GREEN + "You reloged successfully!");
-	    return;
+
 	} else {
 
 	    PlayerData pd = new PlayerData(p);
@@ -46,12 +46,7 @@ public class JoinListener implements Listener {
 	    pd.setJointime();
 	    spawnOutsideBorder(p);
 	}
-    }
 
-    @EventHandler
-    public void onFirstJoin(PlayerJoinEvent e) {
-
-	Player p = e.getPlayer();
 	ServerData sd = Main.getServerData();
 
 	if (sd.getGamestate().equals(Gamestate.PREGAME)) {
@@ -89,9 +84,7 @@ public class JoinListener implements Listener {
 	ServerData sd = Main.getServerData();
 
 	if (!sd.getGamestate().equals(Gamestate.GAME)) { return; }
-
 	if (Main.getPlugin().getConfig().getString("Varo.Players." + p.getName()) == null) { return; }
-
 	if (Main.getPlugin().getConfig().getString("Varo.Players." + p.getName() + ".allowedtojoin").equals("dead")) { return; }
 
 	String name = p.getName();
@@ -164,10 +157,9 @@ public class JoinListener implements Listener {
 	World world = Bukkit.getWorld(worldname);
 	Location spawn = new Location(world, x, y, z);
 
-	if (p.getLocation().distance(spawn) > border) {
-
+	if (p.getLocation().distance(spawn) > border)
 	    outsideBorder(p);
-	}
+
     }
 
     public void registerTeam(Player p) {
@@ -183,37 +175,9 @@ public class JoinListener implements Listener {
 
 	    p.setGameMode(GameMode.SURVIVAL);
 
-	    if (sd.getGamestate().equals(Gamestate.GAME)) {
+	    if (sd.getGamestate().equals(Gamestate.GAME))
+		setVulnerable(p);
 
-		new BukkitRunnable() {
-
-		    int invulnerable = 15;
-
-		    @Override
-		    public void run() {
-
-			invulnerable--;
-
-			if (!p.isOnline()) {
-
-			    cancel();
-			}
-
-			if (invulnerable < 5) {
-
-			    Bukkit.broadcastMessage(Main.pre + ChatColor.DARK_GREEN + p.getName() + " will be ready to fight in " + invulnerable + " seconds!");
-			    p.getWorld().playSound(p.getLocation(), Sound.CLICK, 10, 10);
-			}
-
-			if (invulnerable == 0) {
-
-			    p.getWorld().playSound(p.getLocation(), Sound.AMBIENCE_THUNDER, 10, 10);
-			    pd.setInvulnerable(false);
-			    cancel();
-			}
-		    }
-		}.runTaskTimer(Main.getPlugin(), 0L, 20L);
-	    }
 	}
 
 	if (Main.getPlugin().getConfig().getString("Varo.Players." + p.getName() + ".team") == null) {
@@ -232,38 +196,44 @@ public class JoinListener implements Listener {
 	    pd.setTeam(team);
 	    p.setGameMode(GameMode.SURVIVAL);
 
-	    if (sd.getGamestate().equals(Gamestate.GAME)) {
-
-		new BukkitRunnable() {
-
-		    int invulnerable = 15;
-
-		    @Override
-		    public void run() {
-
-			invulnerable--;
-
-			if (!p.isOnline()) {
-
-			    cancel();
-			}
-
-			if (invulnerable < 5) {
-
-			    Bukkit.broadcastMessage(Main.pre + ChatColor.DARK_GREEN + "The Player " + p.getName() + " will be ready to fight in " + invulnerable + " seconds!");
-			    p.getWorld().playSound(p.getLocation(), Sound.CLICK, 10, 10);
-			}
-
-			if (invulnerable == 0) {
-
-			    p.getWorld().playSound(p.getLocation(), Sound.AMBIENCE_THUNDER, 10, 10);
-			    pd.setInvulnerable(false);
-			    cancel();
-			}
-		    }
-		}.runTaskTimer(Main.getPlugin(), 0L, 20L);
-	    }
+	    if (sd.getGamestate().equals(Gamestate.GAME))
+		setVulnerable(p);
 	}
+
+    }
+
+    private void setVulnerable(Player p) {
+
+	PlayerData pd = Main.getPlayerData(p);
+
+	new BukkitRunnable() {
+
+	    int invulnerable = 15;
+
+	    @Override
+	    public void run() {
+
+		invulnerable--;
+
+		if (!p.isOnline()) {
+
+		    cancel();
+		}
+
+		if (invulnerable < 5) {
+
+		    Bukkit.broadcastMessage(Main.pre + ChatColor.DARK_GREEN + "The Player " + p.getName() + " will be ready to fight in " + invulnerable + " seconds!");
+		    p.getWorld().playSound(p.getLocation(), Sound.CLICK, 10, 10);
+		}
+
+		if (invulnerable == 0) {
+
+		    p.getWorld().playSound(p.getLocation(), Sound.AMBIENCE_THUNDER, 10, 10);
+		    pd.setInvulnerable(false);
+		    cancel();
+		}
+	    }
+	}.runTaskTimer(Main.getPlugin(), 0L, 20L);
 
     }
 }

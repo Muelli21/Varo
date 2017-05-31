@@ -17,7 +17,7 @@ public class BuildCommand implements CommandExecutor {
 
 	if (!(sender instanceof Player)) {
 
-	    sender.sendMessage("You can not build!");
+	    sender.sendMessage("You cannot build!");
 	    return false;
 	}
 

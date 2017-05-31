@@ -58,11 +58,9 @@ public class DeathListener implements Listener {
     public void onSheepDeath(EntityDeathEvent e) {
 
 	if (Bukkit.getServer().getVersion().toString().contains("1.8")) { return; }
-
 	if (!(e.getEntity() instanceof Sheep)) { return; }
 
 	Entity entity = e.getEntity();
-
 	entity.getWorld().dropItemNaturally(entity.getLocation(), new ItemStack(Material.PORK, 2));
     }
 

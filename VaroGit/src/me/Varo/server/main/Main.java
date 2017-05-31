@@ -42,16 +42,16 @@ public class Main extends JavaPlugin implements Listener {
 
 	System.out.print(ChatColor.RED + pre + " has been enabled!");
 
-	LoadListeners();
-	LoadCommands();
-	LoadPlayerDatas();
-	LoadServerData();
-	LoadPlayerCheck();
-	LoadGamestate();
+	loadListeners();
+	loadCommands();
+	loadPlayerDatas();
+	loadServerData();
+	loadPlayerCheck();
+	loadGamestate();
 
     }
 
-    private void LoadPlayerCheck() {
+    private void loadPlayerCheck() {
 
 	ServerData sd = Main.getServerData();
 
@@ -142,7 +142,7 @@ public class Main extends JavaPlugin implements Listener {
 	System.out.print(ChatColor.RED + pre + " has been disabled!");
     }
 
-    private void LoadCommands() {
+    private void loadCommands() {
 
 	getCommand("register").setExecutor(new RegisterCommand());
 	getCommand("start").setExecutor(new StartCommand());
@@ -153,7 +153,7 @@ public class Main extends JavaPlugin implements Listener {
 	getCommand("playerstatus").setExecutor(new PlayerStatusCommand());
     }
 
-    private void LoadListeners() {
+    private void loadListeners() {
 	PluginManager pm = Bukkit.getPluginManager();
 
 	pm.registerEvents(new JoinListener(), this);
@@ -165,7 +165,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    private void LoadPlayerDatas() {
+    private void loadPlayerDatas() {
 	for (Player ps : Bukkit.getOnlinePlayers()) {
 
 	    PlayerData pd = new PlayerData(ps);
@@ -201,23 +201,20 @@ public class Main extends JavaPlugin implements Listener {
 	return pd;
     }
 
-    private void LoadServerData() {
+    private void loadServerData() {
 
 	new ServerData();
     }
 
-    private void LoadGamestate() {
+    private void loadGamestate() {
 
 	ServerData sd = Main.getServerData();
 
-	if (getConfig().getString("Varo.Gamestate") == null) {
-
-	return; }
+	if (getConfig().getString("Varo.Gamestate") == null) { return; }
 
 	if (getConfig().getString("Varo.Gamestate").equals("game")) {
 
 	    sd.setGamestate(Gamestate.GAME);
-
 	} else {
 
 	    sd.setGamestate(Gamestate.PREGAME);

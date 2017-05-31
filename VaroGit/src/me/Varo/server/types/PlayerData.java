@@ -44,55 +44,46 @@ public class PlayerData {
     public List<String> getDuels() {
 
 	return this.duels;
-
     }
 
     public boolean isInChallenge() {
 
 	return this.challenge;
-
     }
 
     public void setInChallenge(boolean mode) {
 
 	this.challenge = mode;
-
     }
 
     public String getLastMessage() {
 
 	return this.lastmessage;
-
     }
 
     public void setLastMessage(String s) {
 
 	this.lastmessage = s;
-
     }
 
     public String getNick() {
 
 	return this.nick;
-
     }
 
     public void setNick(String nick) {
 
 	this.nick = nick;
-
     }
 
     public void duel(Player p) {
 
 	duels.add(p.getName());
-
     }
 
     public void removeDuel(String s) {
 
 	duels.remove(s);
-
     }
 
     public void report() {

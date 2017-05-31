@@ -41,10 +41,8 @@ public class StartCommand implements CommandExecutor {
 
 	if (!p.hasPermission("admin")) { return false; }
 
-	if (args.length != 0) {
-
+	if (args.length != 0)
 	    p.sendMessage(Main.pre + ChatColor.RED + " Please use /start");
-	}
 
 	ServerData sd = Main.getServerData();
 	sd.setGamestate(Gamestate.START);
@@ -163,5 +161,4 @@ public class StartCommand implements CommandExecutor {
 
 	firework.setFireworkMeta(meta);
     }
-
 }
