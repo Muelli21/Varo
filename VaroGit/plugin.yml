@@ -1,0 +1,14 @@
+authors: [Muelli]
+name: Varo
+main: me.Varo.server.main.Main
+version: 1.0
+
+commands:
+    register:
+    start:
+    timeleft:
+    gamestate:
+    server:
+    build:
+    timetoreset:
+    playerstatus:
